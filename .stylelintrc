@@ -1,0 +1,15 @@
+{
+  "processors": [
+    "stylelint-processor-styled-components"
+  ],
+  "extends": [
+    "stylelint-config-recommended",
+    "stylelint-config-styled-components"
+  ],
+  "rules": {
+    "property-no-vendor-prefix": null,
+    "selector-type-no-unknown": [true, { "ignoreTypes": ["$dummyValue"] }],
+    "no-duplicate-selectors": null
+  },
+  "customSyntax": "@stylelint/postcss-css-in-js"
+}

@@ -1,9 +1,7 @@
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import App from './app'
 
-const MOUNT_POINT = document.querySelector('#app')
+const container = document.querySelector('#app')
 
-render(
-  <App />,
-  MOUNT_POINT
-)
+const root = createRoot(container!)
+root.render(<App />)
