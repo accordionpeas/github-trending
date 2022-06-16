@@ -10,6 +10,9 @@ interface FlexI {
   justify?: Alignment
   align?: Alignment
   wrap?: boolean
+  height?: string
+  width?: string
+  flex?: any
 }
 
 const Flex = styled.div<FlexI>`
@@ -19,6 +22,9 @@ const Flex = styled.div<FlexI>`
   justify-content: ${(props) => props.justify || 'normal'};
   align-items: ${(props) => props.align || 'normal'};
   flex-wrap: ${(props) => (props.wrap ? 'wrap' : 'nowrap')};
+  height: ${(props) => props.height || 'auto'};
+  width: ${(props) => props.width || 'auto'};
+  flex: ${(props) => props.flex || 'none'};
 `
 
 export default Flex

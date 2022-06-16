@@ -12,6 +12,12 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   }
+
+  #app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 export default GlobalStyle

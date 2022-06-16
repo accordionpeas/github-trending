@@ -11,6 +11,7 @@ interface Theme {
     black: string
     white: string
     red: string
+    blue: string
   }
 }
 

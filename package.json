@@ -17,9 +17,11 @@
     "url": "git@github-accordionpeas:accordionpeas/github-trending.git"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "facepaint": "^1.2.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-query": "^3.39.1",
     "styled-components": "^5.3.5",
     "styled-normalize": "^8.0.7"
   },
