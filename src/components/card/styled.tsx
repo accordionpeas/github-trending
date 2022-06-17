@@ -32,3 +32,12 @@ export const StyledLink = styled.a`
 export const StyledStarCount = styled.span`
   font-size: 14px;
 `
+
+export const StyledLanguage = styled.a`
+  color: ${(props) => props.theme.colors.black};
+  font-size: 14px;
+
+  &:hover {
+    color: ${(props) => props.theme.colors.blue};
+  }
+`

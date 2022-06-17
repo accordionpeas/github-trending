@@ -13,6 +13,8 @@ type Repo = {
   description: string
   starCount: number
   isFavourited: boolean
+  language: string | null
+  languageUrl: string
 }
 
 type Response = {
@@ -22,6 +24,8 @@ type Response = {
     html_url: string
     description: string
     stargazers_count: number
+    language: string | null
+    languages_url: string
   }[]
 }
 
@@ -38,6 +42,8 @@ const fetchRepos = async (date: string): Promise<Repo[]> => {
     url: item.html_url,
     description: item.description,
     starCount: item.stargazers_count,
+    language: item.language,
+    languageUrl: item.languages_url,
     isFavourited: favourites.includes(item.id),
   }))
 }

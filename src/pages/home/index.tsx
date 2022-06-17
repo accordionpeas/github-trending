@@ -1,11 +1,13 @@
 import ActivityIndicator from '../../components/activity-indicator'
 import Card from '../../components/card'
+import Filters from '../../components/filters'
 import Flex from '../../components/flex'
-import { useQueryRepos, toggleQueryFavourite } from '../../service'
-import { StyledWrapper, StyledGrid } from './styled'
+import { toggleQueryFavourite } from '../../service'
+import { useRepoFilters } from './hooks'
+import { StyledWrapper, StyledGrid, StyledEmptyMessage } from './styled'
 
 const Home = () => {
-  const { data = [], isLoading } = useQueryRepos()
+  const { filters, setFilters, isLoading, data } = useRepoFilters()
 
   if (isLoading) {
     return (
@@ -17,21 +19,35 @@ const Home = () => {
 
   return (
     <StyledWrapper>
-      <StyledGrid>
-        {data.map(({ id, fullName, url, description, starCount, isFavourited }) => (
-          <Card
-            key={id}
-            title={fullName}
-            url={url}
-            description={description}
-            starCount={starCount}
-            isFavourited={isFavourited}
-            onFavouriteToggle={() => {
-              toggleQueryFavourite(id, !isFavourited)
-            }}
-          />
-        ))}
-      </StyledGrid>
+      <Filters
+        options={filters}
+        onChange={(newFilters) => {
+          setFilters(newFilters)
+        }}
+      />
+      {data.length ? (
+        <StyledGrid>
+          {data.map(({ id, fullName, url, description, starCount, language, languageUrl, isFavourited }) => (
+            <Card
+              key={id}
+              title={fullName}
+              url={url}
+              description={description}
+              starCount={starCount}
+              langugage={language}
+              languageUrl={languageUrl}
+              isFavourited={isFavourited}
+              onFavouriteToggle={() => {
+                toggleQueryFavourite(id, !isFavourited)
+              }}
+            />
+          ))}
+        </StyledGrid>
+      ) : (
+        <Flex justify="center">
+          <StyledEmptyMessage>Nothing to see here</StyledEmptyMessage>
+        </Flex>
+      )}
     </StyledWrapper>
   )
 }

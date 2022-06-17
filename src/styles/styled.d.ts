@@ -12,6 +12,7 @@ interface Theme {
     white: string
     red: string
     blue: string
+    lightGrey: string
   }
 }
 

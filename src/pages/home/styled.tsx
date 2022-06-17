@@ -13,3 +13,7 @@ export const StyledGrid = styled.div`
     'grid-template-columns': ['1fr', '1fr 1fr', '1fr 1fr 1fr', '1fr 1fr 1fr 1fr'],
   })}
 `
+
+export const StyledEmptyMessage = styled.p`
+  font-size: 16px;
+`
