@@ -1,31 +1,69 @@
 import axios from 'axios'
 import { useQuery } from 'react-query'
+import { getFavourites, toggleFavourite } from '../utils/favourites'
+import queryClient from './query-client'
+import getTimestamp from '../utils/timestamp'
+
+const queryKey = 'repos'
 
 type Repo = {
   id: number
-  full_name: string
-  html_url: string
+  fullName: string
+  url: string
   description: string
-  stargazers_count: number
+  starCount: number
+  isFavourited: boolean
 }
 
 type Response = {
-  items: Repo[]
+  items: {
+    id: number
+    full_name: string
+    html_url: string
+    description: string
+    stargazers_count: number
+  }[]
 }
 
-const fetchRepos = async (date: string) => {
+const fetchRepos = async (date: string): Promise<Repo[]> => {
   const response = await axios.get<Response>(
     `https://api.github.com/search/repositories?q=created:%3E${date}&sort=stars&order=desc`
   )
-  return response.data.items
+
+  const favourites = getFavourites()
+
+  return response.data.items.map((item) => ({
+    id: item.id,
+    fullName: item.full_name,
+    url: item.html_url,
+    description: item.description,
+    starCount: item.stargazers_count,
+    isFavourited: favourites.includes(item.id),
+  }))
 }
 
-const pad = (num: number): string => (num < 10 ? `0${num}` : `${num}`)
-
 export const useQueryRepos = () => {
-  const now = new Date()
-  now.setDate(now.getDate() - 7)
-  const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`
+  const timestamp = getTimestamp()
 
-  return useQuery(['repos', date], () => fetchRepos(date))
+  return useQuery([queryKey, timestamp], () => fetchRepos(timestamp))
+}
+
+export const toggleQueryFavourite = (id: number, isFavourited: boolean) => {
+  const timestamp = getTimestamp()
+  const query = [queryKey, timestamp]
+  const repos = queryClient.getQueryData<Repo[]>(query) || []
+
+  const newRepos = repos.map((repo) => {
+    if (repo.id === id) {
+      return {
+        ...repo,
+        isFavourited,
+      }
+    }
+    return repo
+  })
+
+  queryClient.setQueryData(query, newRepos)
+
+  toggleFavourite(id)
 }

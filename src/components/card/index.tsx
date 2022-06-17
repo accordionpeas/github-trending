@@ -1,6 +1,7 @@
 import Heading from '../heading'
 import Flex from '../flex'
 import Icon from '../icon'
+import Clickable from '../clickable'
 import { StyledWrapper, StyledDescription, StyledLink, StyledStarCount } from './styled'
 
 interface CardI {
@@ -9,9 +10,10 @@ interface CardI {
   description: string
   starCount: number
   isFavourited: boolean
+  onFavouriteToggle: () => void
 }
 
-const Card = ({ title, url, description, starCount, isFavourited }: CardI) => (
+const Card = ({ title, url, description, starCount, isFavourited, onFavouriteToggle }: CardI) => (
   <StyledWrapper>
     <Heading level={2}>
       <StyledLink href={url} target="_blank">
@@ -22,9 +24,15 @@ const Card = ({ title, url, description, starCount, isFavourited }: CardI) => (
     <Flex justify="space-between" gap="medium">
       <Flex gap="small">
         <Icon name="star" />
-        <StyledStarCount>{starCount}</StyledStarCount>
+        <StyledStarCount>
+          <span className="visually-hidden">Star count: </span>
+          {starCount}
+        </StyledStarCount>
       </Flex>
-      <Icon name="heart" fill={isFavourited ? 'red' : undefined} />
+      <Clickable onClick={onFavouriteToggle}>
+        <Icon name="heart" fill={isFavourited ? 'red' : undefined} />
+        <span className="visually-hidden">{isFavourited ? 'Remove from favourites' : 'Add to favourites'}</span>
+      </Clickable>
     </Flex>
   </StyledWrapper>
 )

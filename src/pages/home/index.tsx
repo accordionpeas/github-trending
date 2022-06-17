@@ -1,7 +1,7 @@
 import ActivityIndicator from '../../components/activity-indicator'
 import Card from '../../components/card'
 import Flex from '../../components/flex'
-import { useQueryRepos } from '../../service'
+import { useQueryRepos, toggleQueryFavourite } from '../../service'
 import { StyledWrapper, StyledGrid } from './styled'
 
 const Home = () => {
@@ -18,14 +18,17 @@ const Home = () => {
   return (
     <StyledWrapper>
       <StyledGrid>
-        {data.map(({ id, full_name, html_url, description, stargazers_count }) => (
+        {data.map(({ id, fullName, url, description, starCount, isFavourited }) => (
           <Card
             key={id}
-            title={full_name}
-            url={html_url}
+            title={fullName}
+            url={url}
             description={description}
-            starCount={stargazers_count}
-            isFavourited={false}
+            starCount={starCount}
+            isFavourited={isFavourited}
+            onFavouriteToggle={() => {
+              toggleQueryFavourite(id, !isFavourited)
+            }}
           />
         ))}
       </StyledGrid>

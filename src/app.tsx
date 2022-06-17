@@ -1,16 +1,15 @@
 import { ThemeProvider } from 'styled-components'
-import { QueryClientProvider, QueryClient } from 'react-query'
+import { QueryClientProvider } from 'react-query'
 import GlobalStyle from './styles/global'
 import theme from './styles/theme'
 import Header from './components/header'
 import HomePage from './pages/home'
-
-const client = new QueryClient()
+import queryClient from './service/query-client'
 
 const App = () => (
   <>
     <GlobalStyle />
-    <QueryClientProvider client={client}>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Header />
         <HomePage />

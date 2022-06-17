@@ -11,12 +11,23 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+    background: #F8F9FB;
   }
 
   #app {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+  }
+
+  .visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
   }
 `
 
