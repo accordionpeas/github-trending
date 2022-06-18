@@ -6,7 +6,7 @@ import getTimestamp from '../utils/timestamp'
 
 const queryKey = 'repos'
 
-type Repo = {
+export type Repo = {
   id: number
   fullName: string
   url: string

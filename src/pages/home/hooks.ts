@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react'
-import { useQueryRepos } from '../../service'
+import { Repo, useQueryRepos } from '../../service'
 import { Option } from '../../components/filters'
 
 const filterFavouriteValue = 'favourites'
 
-export const useRepoFilters = () => {
-  const [filters, setFilters] = useState<Option[]>([
-    {
-      value: filterFavouriteValue,
-      label: 'Favourites',
-      checked: false,
-    },
-  ])
+interface UseLanguageFilters {
+  isSuccess: boolean
+  data: Repo[]
+  setFilters: (filters: Option[]) => void
+  filters: Option[]
+}
 
-  const { data = [], isLoading, isSuccess } = useQueryRepos()
-
+const useLanguageFilters = ({ isSuccess, data, setFilters, filters }: UseLanguageFilters) => {
   useEffect(() => {
     if (isSuccess) {
       const languages = data.map(({ language }) => language).filter((language): language is string => !!language)
@@ -30,6 +27,20 @@ export const useRepoFilters = () => {
       setFilters([...filters, ...languageFilters])
     }
   }, [isSuccess])
+}
+
+export const useRepoFilters = () => {
+  const [filters, setFilters] = useState<Option[]>([
+    {
+      value: filterFavouriteValue,
+      label: 'Favourites',
+      checked: false,
+    },
+  ])
+
+  const { data = [], isLoading, isSuccess } = useQueryRepos()
+
+  useLanguageFilters({ isSuccess, data, setFilters, filters })
 
   const filterValues = filters.filter(({ checked }) => checked).map(({ value }) => value)
 
