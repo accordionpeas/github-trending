@@ -43,7 +43,7 @@ const Card = ({
           <Icon name="star" />
           <StyledStarCount>
             <span className="visually-hidden">Star count: </span>
-            {starCount}
+            <span className="star-count">{starCount}</span>
           </StyledStarCount>
         </Flex>
       </Flex>
