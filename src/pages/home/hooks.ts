@@ -44,12 +44,14 @@ export const useRepoFilters = () => {
 
   const filterValues = filters.filter(({ checked }) => checked).map(({ value }) => value)
 
+  const filterByFavourite = filterValues.includes(filterFavouriteValue)
+  const filterByLanguage = !!filterValues.filter((value) => value !== filterFavouriteValue).length
+
   const filteredData = data.filter(({ language, isFavourited }) => {
     if (filterValues.length) {
-      const filterByFavourite = filterValues.includes(filterFavouriteValue)
-      const filterByLanguage = !!filterValues.filter((value) => value !== filterFavouriteValue).length
-
-      return (filterByFavourite && isFavourited) || (filterByLanguage && filterValues.includes(language || ''))
+      const isFavouriteMatch = filterByFavourite && isFavourited
+      const isLanguageMatch = filterByLanguage && filterValues.includes(language || '')
+      return isFavouriteMatch || isLanguageMatch
     }
 
     return true

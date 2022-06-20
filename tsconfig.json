@@ -20,8 +20,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    "esModuleInterop": true
-  },
-  "include": ["src"],
-  "exclude": ["cypress"]
+    "esModuleInterop": true,
+    "types": [
+      "cypress",
+      "@testing-library/cypress"
+    ],
+    "skipLibCheck": true
+  }
 }
